@@ -24,7 +24,9 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _ComprarTicket_QNAME = new QName("http://antel.com.uy/", "comprarTicket");
     private final static QName _Test_QNAME = new QName("http://antel.com.uy/", "test");
+    private final static QName _ComprarTicketResponse_QNAME = new QName("http://antel.com.uy/", "comprarTicketResponse");
     private final static QName _TestResponse_QNAME = new QName("http://antel.com.uy/", "testResponse");
 
     /**
@@ -32,6 +34,14 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link ComprarTicket }
+     * 
+     */
+    public ComprarTicket createComprarTicket() {
+        return new ComprarTicket();
     }
 
     /**
@@ -51,12 +61,38 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ComprarTicketResponse }
+     * 
+     */
+    public ComprarTicketResponse createComprarTicketResponse() {
+        return new ComprarTicketResponse();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ComprarTicket }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://antel.com.uy/", name = "comprarTicket")
+    public JAXBElement<ComprarTicket> createComprarTicket(ComprarTicket value) {
+        return new JAXBElement<ComprarTicket>(_ComprarTicket_QNAME, ComprarTicket.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Test }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://antel.com.uy/", name = "test")
     public JAXBElement<Test> createTest(Test value) {
         return new JAXBElement<Test>(_Test_QNAME, Test.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ComprarTicketResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://antel.com.uy/", name = "comprarTicketResponse")
+    public JAXBElement<ComprarTicketResponse> createComprarTicketResponse(ComprarTicketResponse value) {
+        return new JAXBElement<ComprarTicketResponse>(_ComprarTicketResponse_QNAME, ComprarTicketResponse.class, null, value);
     }
 
     /**

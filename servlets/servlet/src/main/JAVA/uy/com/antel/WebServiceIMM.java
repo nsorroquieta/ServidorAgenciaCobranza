@@ -25,6 +25,32 @@ public interface WebServiceIMM {
 
     /**
      * 
+     * @param arg3
+     * @param arg2
+     * @param arg4
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "comprarTicket", targetNamespace = "http://antel.com.uy/", className = "uy.com.antel.ComprarTicket")
+    @ResponseWrapper(localName = "comprarTicketResponse", targetNamespace = "http://antel.com.uy/", className = "uy.com.antel.ComprarTicketResponse")
+    public String comprarTicket(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1,
+        @WebParam(name = "arg2", targetNamespace = "")
+        String arg2,
+        @WebParam(name = "arg3", targetNamespace = "")
+        String arg3,
+        @WebParam(name = "arg4", targetNamespace = "")
+        int arg4);
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns java.lang.String
