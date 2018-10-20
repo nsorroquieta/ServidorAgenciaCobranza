@@ -1,32 +1,42 @@
 package uy.com.antel;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.sql.SQLOutput;
 
 public class Capitalizer extends Thread {
 
-    private Socket socket;
+    private Socket clientSocket;
     private int clientNumber;
+    private PrintWriter out;
+    private BufferedReader in;
 
-    public Capitalizer(Socket socket, int clientNumber) {
-        this.socket = socket;
+    public Capitalizer(Socket clientSocket, int clientNumber) {
+        this.clientSocket = clientSocket;
         this.clientNumber = clientNumber;
-        System.out.println("nuew connection with client· "+clientNumber+" at "+ socket);
+        System.out.println("new connection with client· "+clientNumber+" at "+ clientSocket);
     }
 
     public void run(){
+        System.out.println("ejecuto RUN");
         try {
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            String recivedMessage = in.readLine();
+            System.out.println(recivedMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+/*        try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            out.println("Bienvenido");
-
             while(true){
                 String input = in.readLine();
                 if(input == null || input.equals(".")) {
-                    out.println(input.toUpperCase());
+                    if(input!=null) {
+                        System.out.println(input);
+                    }
+                }else{
+                   System.out.println("elsa:::"+input);
                 }
             }
 
@@ -40,9 +50,6 @@ public class Capitalizer extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
-
-
-
 }
