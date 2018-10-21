@@ -8,48 +8,71 @@ public class Capitalizer extends Thread {
 
     private Socket clientSocket;
     private int clientNumber;
+    private DataOutputStream output = null;
     private PrintWriter out;
-    private BufferedReader in;
+    private DataInputStream in;
 
     public Capitalizer(Socket clientSocket, int clientNumber) {
         this.clientSocket = clientSocket;
         this.clientNumber = clientNumber;
-        System.out.println("new connection with client· "+clientNumber+" at "+ clientSocket);
+        System.out.println("Se genero una nuevo coexión núm: "+clientNumber);
     }
 
     public void run(){
-        System.out.println("ejecuto RUN");
+        System.out.println("Empieza a correr un nuevo Hilo.");
+        // takes input from the client socket
         try {
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String recivedMessage = in.readLine();
-            System.out.println(recivedMessage);
+            in = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        String line = "";
+
+        // reads message from client until "Over" is sent
+        System.out.println("entro");
+        boolean flagRead = true;
+        while (flagRead)
+        {
+            if(line != null){
+                System.out.println("do something");
+                try
+                {
+                    line = input.readLine();
+                    flagRead = false;
+                    System.out.println("La consola Lee: "+line);
+
+                }
+                catch(IOException i)
+                {
+                    System.out.println("cayo la lectura.");
+                    System.out.println(i);
+                }
+            }
+        }
+            System.out.println("Aqui genero el ticket"+line);
+        //respondo OK + idTiket o False;
+        this.sendMessage("muy bien}");
+        System.out.println("Closing connection");
+        // close connection
+        clientSocket.close();
+        input.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-/*        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            while(true){
-                String input = in.readLine();
-                if(input == null || input.equals(".")) {
-                    if(input!=null) {
-                        System.out.println(input);
-                    }
-                }else{
-                   System.out.println("elsa:::"+input);
-                }
-            }
+    }
 
 
-
+    private void sendMessage(String msg){
+        try {
+            System.out.println("Intento de envío");
+            PrintWriter pw = new PrintWriter(clientSocket.getOutputStream(), true);
+            pw.println("hello world");
+            pw.close();
+//            output = new DataOutputStream(clientSocket.getOutputStream());
+  //          output.writeBytes(msg);
+            //output.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally{
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
+        }
     }
+
 }
