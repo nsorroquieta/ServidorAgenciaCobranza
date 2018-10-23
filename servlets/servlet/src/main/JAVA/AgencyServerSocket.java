@@ -22,14 +22,12 @@ public class AgencyServerSocket extends HttpServlet {
             try
             {
                 server = new ServerSocket(9898);
-                System.out.println("Server started");
-
-                System.out.println("Waiting for a client ...");
+                System.out.println("Esperando conexion...");
 
                 while(true) {
                     socket = server.accept();
-                    System.out.println("Client accepted");
                     new Capitalizer(socket, clientNumber++).start();
+                    System.out.println("Conexion realizada");
                 }
 
             }

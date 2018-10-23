@@ -3,6 +3,7 @@ package uy.com.antel;
 import java.io.*;
 import java.net.Socket;
 import java.sql.SQLOutput;
+import com.google.gson.Gson;
 
 public class Capitalizer extends Thread {
 
@@ -15,7 +16,7 @@ public class Capitalizer extends Thread {
     public Capitalizer(Socket clientSocket, int clientNumber) {
         this.clientSocket = clientSocket;
         this.clientNumber = clientNumber;
-        System.out.println("Se genero una nuevo coexión núm: "+clientNumber);
+        System.out.println("Se genero una conxion("+clientNumber+")");
     }
 
     /**
@@ -83,9 +84,14 @@ public class Capitalizer extends Thread {
      * siendo XXXX el id del ticket generado;
      */
     private String crearTicket(String jsonData){
-        String response = "La venta del ticket no pudo realizarse.";
-        return response;
+
+        Ticket ticket = new Gson().fromJson(jsonData,Ticket.class);
+
+        /*WebServiceIMMService ws = new WebServiceIMMService();
+        String response = ws.getWebServiceIMMPort().test("Texto de prueba");
+        System.out.println(response);
+        String salesResponse = ws.getWebServiceIMMPort().comprarTicket(5, ticket.getCarRegistration(), "2018-10-11 22:47:00", "2018-10-11 22:50:00", 60);
+        System.out.println(salesResponse);*/
+        return "Se creo el Ticket para la matricula: " + ticket.getCarRegistration();
     }
-
-
 }
