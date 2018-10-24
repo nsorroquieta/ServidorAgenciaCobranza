@@ -4,7 +4,9 @@ import java.io.*;
 import java.net.Socket;
 import java.sql.SQLOutput;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.google.gson.Gson;
 
@@ -87,18 +89,42 @@ public class Capitalizer extends Thread {
      * siendo XXXX el id del ticket generado;
      */
     private String crearTicket(String jsonData){
+        System.out.println("Json Data en Crear Ticket: " + jsonData);
+        voInputData inputData = new Gson().fromJson(jsonData,voInputData.class);
 
-        Ticket ticket = new Gson().fromJson(jsonData,Ticket.class);
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            Date startDate = formatter.parse(inputData.getStartDate());
+            Ticket ticket  = new Ticket(inputData.getCarRegistration(),startDate,Integer.parseInt(inputData.getMinutes()));
+
+            if(inputData.getCommand().equals("buyTicket"))
+            {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String startDateAsString = sdf.format(ticket.getStartDate());
+
+                WebServiceIMMService ws = new WebServiceIMMService();
+                String buyTicketresponse = ws.getWebServiceIMMPort().comprarTicket(5, ticket.getCarRegistration(), startDateAsString, inputData.getStartDate(), ticket.getMinutes());
+                return "Se creo el Ticket "+ buyTicketresponse+" para la matricula: " + ticket.getCarRegistration();
+            }
+
+        }catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "nada";
+
+        /*
         ticket.setStartDate(ticket.getStartDate());
 
-        WebServiceIMMService ws = new WebServiceIMMService();
-        String response = ws.getWebServiceIMMPort().test("Texto de prueba");
-        System.out.println(response);
+        //String response = ws.getWebServiceIMMPort().test("Texto de prueba");
+        //System.out.println("response:" + response);
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String salesDate = dateFormat.format(ticket.getSalesDateTime());
         String startDate = dateFormat.format(ticket.getStartDateTime());
-        String salesResponse = ws.getWebServiceIMMPort().comprarTicket(5, ticket.getCarRegistration(), salesDate, startDate, ticket.getMinutes());
-        System.out.println(salesResponse);
-        return "Se creo el Ticket "+salesResponse+" para la matricula: " + ticket.getCarRegistration();
+
+        System.out.println("sales respose:" + salesResponse);
+                return "CREAR TICKET: Command: " + inputData.getCommand() + "StartDate: " + inputData.getStartDate() + "carRegistration: " + inputData.getCarRegistration() + "minutes: " + inputData.getMinutes();
+
+        */
     }
 }
