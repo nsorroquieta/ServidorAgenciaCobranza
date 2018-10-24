@@ -94,11 +94,11 @@ public class Capitalizer extends Thread {
         WebServiceIMMService ws = new WebServiceIMMService();
         String response = ws.getWebServiceIMMPort().test("Texto de prueba");
         System.out.println(response);
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String salesDate = dateFormat.format(ticket.getSalesDateTime());
-        String startDate = dateFormat.format(ticket.getSalesDateTime());
+        String startDate = dateFormat.format(ticket.getStartDateTime());
         String salesResponse = ws.getWebServiceIMMPort().comprarTicket(5, ticket.getCarRegistration(), salesDate, startDate, ticket.getMinutes());
         System.out.println(salesResponse);
-        return "Se creo el Ticket para la matricula: " + ticket.getCarRegistration();
+        return "Se creo el Ticket "+salesResponse+" para la matricula: " + ticket.getCarRegistration();
     }
 }

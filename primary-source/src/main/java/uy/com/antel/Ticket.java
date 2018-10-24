@@ -10,7 +10,7 @@ public class Ticket {
     //private Agencia agenciaCobranza;
     private String carRegistration;
     private String startDate;
-    private Date salesDateTime;
+    private Date salesDateTime = new Date();
     private Date startDateTime; //Falta indicar hora de comienzo
     private int minutes; //Faltan los minutos.
     private float totalPrice; //Esto debería pasarlo la intendencia.
