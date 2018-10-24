@@ -23,7 +23,7 @@
     </dependency>
     <dependency>
       <groupId>uy.com.antel</groupId>
-      <artifactId>servlet</artifactId>
+      <artifactId>agencia</artifactId>
       <type>war</type>
     </dependency>
     <dependency>
