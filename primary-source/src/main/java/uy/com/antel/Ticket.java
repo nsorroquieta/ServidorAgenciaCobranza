@@ -1,5 +1,7 @@
 package uy.com.antel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Ticket {
@@ -7,6 +9,7 @@ public class Ticket {
     private int ticketId;
     //private Agencia agenciaCobranza;
     private String carRegistration;
+    private String startDate;
     private Date salesDateTime;
     private Date startDateTime; //Falta indicar hora de comienzo
     private int minutes; //Faltan los minutos.
@@ -18,6 +21,10 @@ public class Ticket {
         this.salesDateTime = salesDateTime;
         this.startDateTime = startDateTime;
         this.minutes = minutes;
+    }
+
+    public Ticket(){
+
     }
 
     public void saveMe(){
@@ -70,5 +77,25 @@ public class Ticket {
 
     public void setTotalPrice(float totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+        this.setStartDateTime(this.getDate(startDate));
+    }
+
+
+    private Date getDate(String fecha) {
+        Date date1 = null;
+        try {
+            date1 = (Date) new SimpleDateFormat("dd-MM-yyyy").parse(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date1;
     }
 }

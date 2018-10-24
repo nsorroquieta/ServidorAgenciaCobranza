@@ -3,6 +3,9 @@ package uy.com.antel;
 import java.io.*;
 import java.net.Socket;
 import java.sql.SQLOutput;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import com.google.gson.Gson;
 
 public class Capitalizer extends Thread {
@@ -86,12 +89,16 @@ public class Capitalizer extends Thread {
     private String crearTicket(String jsonData){
 
         Ticket ticket = new Gson().fromJson(jsonData,Ticket.class);
+        ticket.setStartDate(ticket.getStartDate());
 
-        /*WebServiceIMMService ws = new WebServiceIMMService();
+        WebServiceIMMService ws = new WebServiceIMMService();
         String response = ws.getWebServiceIMMPort().test("Texto de prueba");
         System.out.println(response);
-        String salesResponse = ws.getWebServiceIMMPort().comprarTicket(5, ticket.getCarRegistration(), "2018-10-11 22:47:00", "2018-10-11 22:50:00", 60);
-        System.out.println(salesResponse);*/
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String salesDate = dateFormat.format(ticket.getSalesDateTime());
+        String startDate = dateFormat.format(ticket.getSalesDateTime());
+        String salesResponse = ws.getWebServiceIMMPort().comprarTicket(5, ticket.getCarRegistration(), salesDate, startDate, ticket.getMinutes());
+        System.out.println(salesResponse);
         return "Se creo el Ticket para la matricula: " + ticket.getCarRegistration();
     }
 }
