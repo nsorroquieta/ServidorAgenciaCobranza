@@ -7,11 +7,14 @@ import java.util.Date;
 public class voInputData{
 
     private String command;
+
+
+    private String ticketId;
     private String carRegistration;
     private String startDate;
     private String minutes;
 
-    public voInputData(String command, String carRegistration, String inputStartDate, String minutes) {
+    public voInputData(String command, String ticketId, String carRegistration, String inputStartDate, String minutes) {
         System.out.println("Command: " + command + "StartDate: " + inputStartDate + "carRegistration: " + carRegistration + "minutes: " + minutes);
     }
 
@@ -21,6 +24,14 @@ public class voInputData{
 
     public void setCommand(String command) {
         this.command = command;
+    }
+
+    public String getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(String ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getCarRegistration() {

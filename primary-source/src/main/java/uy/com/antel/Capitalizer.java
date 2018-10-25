@@ -89,22 +89,35 @@ public class Capitalizer extends Thread {
      * siendo XXXX el id del ticket generado;
      */
     private String crearTicket(String jsonData){
-        System.out.println("Json Data en Crear Ticket: " + jsonData);
         voInputData inputData = new Gson().fromJson(jsonData,voInputData.class);
 
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            Date startDate = formatter.parse(inputData.getStartDate());
-            Ticket ticket  = new Ticket(inputData.getCarRegistration(),startDate,Integer.parseInt(inputData.getMinutes()));
 
             if(inputData.getCommand().equals("buyTicket"))
             {
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                Date startDate = formatter.parse(inputData.getStartDate());
+                Ticket ticket  = new Ticket(inputData.getCarRegistration(),startDate,Integer.parseInt(inputData.getMinutes()));
+
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 String startDateAsString = sdf.format(ticket.getStartDate());
 
                 WebServiceIMMService ws = new WebServiceIMMService();
-                String buyTicketresponse = ws.getWebServiceIMMPort().comprarTicket(5, ticket.getCarRegistration(), startDateAsString, inputData.getStartDate(), ticket.getMinutes());
-                return "Se creo el Ticket "+ buyTicketresponse+" para la matricula: " + ticket.getCarRegistration();
+                String buyTicketResponse = ws.getWebServiceIMMPort().comprarTicket(ticket.getAgencyID(), ticket.getCarRegistration(), startDateAsString, inputData.getStartDate(), ticket.getMinutes());
+                ticket.setTicketID(Integer.parseInt(buyTicketResponse));
+                TicketPersist ts = new TicketPersist(ticket);
+                boolean result = ts.guardarDatos();
+                if(result)
+                {
+                    return "Se creo el Ticket "+ buyTicketResponse+" para la matricula: " + ticket.getCarRegistration();
+                } else {
+                    return "Ocurrio un error al intentar guardar el ticket en la base de datos de la Agencia";
+                }
+            }
+
+            if(inputData.getCommand().equals("cancelTicket"))
+            {
+                return "Se va a cancelar el ticket: " + inputData.getTicketId();
             }
 
         }catch (ParseException e) {
