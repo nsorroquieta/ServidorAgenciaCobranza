@@ -6,6 +6,7 @@ import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.google.gson.Gson;
@@ -102,17 +103,22 @@ public class Capitalizer extends Thread {
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 String startDateAsString = sdf.format(ticket.getStartDate());
+                String saleDate = sdf.format(Calendar.getInstance().getTime());
 
                 WebServiceIMMService ws = new WebServiceIMMService();
-                int buyTicketResponse = ws.getWebServiceIMMPort().comprarTicket(ticket.getAgencyID(), ticket.getCarRegistration(), startDateAsString, inputData.getStartDate(), ticket.getMinutes());
+                int buyTicketResponse = ws.getWebServiceIMMPort().comprarTicket(ticket.getAgencyID(), ticket.getCarRegistration(), saleDate, inputData.getStartDate(), ticket.getMinutes());
+                //int buyTicketResponse = ws.getWebServiceIMMPort().comprarTicket(ticket.getAgencyID(), ticket.getCarRegistration(), startDateAsString, inputData.getStartDate(), ticket.getMinutes());
                 //String buyTicketResponse = ws.getWebServiceIMMPort().comprarTicket(ticket.getAgencyID(), ticket.getCarRegistration(), startDateAsString, inputData.getStartDate(), ticket.getMinutes());
                 //ticket.setTicketID(Integer.parseInt(buyTicketResponse));
                 ticket.setTicketID(buyTicketResponse);
+
+                ticket.setPrice(ws.getWebServiceIMMPort().calcularCosto(ticket.getMinutes()));
+
                 TicketPersist ts = new TicketPersist(ticket);
                 boolean result = ts.guardarDatos();
                 if(result)
                 {
-                    return "Se creo el Ticket "+ buyTicketResponse+" para la matricula: " + ticket.getCarRegistration();
+                    return "Se creo el Ticket "+ buyTicketResponse+" para la matricula: " + ticket.getCarRegistration()+ "-: $  "+ticket.getPrice();
                 } else {
                     return "Ocurrio un error al intentar guardar el ticket en la base de datos de la Agencia";
                 }

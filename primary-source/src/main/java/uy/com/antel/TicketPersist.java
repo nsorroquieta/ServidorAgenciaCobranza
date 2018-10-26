@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class TicketPersist extends DbConnection {
@@ -22,9 +23,10 @@ public class TicketPersist extends DbConnection {
 
     public boolean guardarDatos(){
         try {
-            String salesDate = this.formatDateToDB(ticket.getSaleDate());
+            //String salesDate = this.formatDateToDB(ticket.getSaleDate());
+            String salesDate = this.formatDateToDB(Calendar.getInstance().getTime());
             String startDate = this.formatDateToDB(ticket.getStartDate());
-            String query = "INSERT INTO tickets (ticketId, agencyId, carRegistration, minutes, saleDate, startDate,status) VALUES("+ticket.getTicketID()+", "+ticket.getAgencyID()+", '"+ticket.getCarRegistration()+"', "+ticket.getMinutes()+", '"+salesDate+"', '"+startDate+"','ACTIVO')";
+            String query = "INSERT INTO tickets (ticketId, agencyId, carRegistration, minutes, saleDate, startDate,price,status) VALUES("+ticket.getTicketID()+", "+ticket.getAgencyID()+", '"+ticket.getCarRegistration()+"', "+ticket.getMinutes()+", '"+salesDate+"', '"+startDate+"',"+ticket.getPrice()+", 'ACTIVO')";
             conn = ds.getConnection();
             ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.executeUpdate();

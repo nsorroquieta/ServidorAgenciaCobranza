@@ -12,6 +12,7 @@ public class Ticket {
     private Date startDate;
     private Date saleDate;
     private Integer minutes;
+    private Float price;
 
     public Ticket(String carRegistration, Date startDate, Integer minutes) {
         this.setCarRegistration(carRegistration);
@@ -67,5 +68,13 @@ public class Ticket {
 
     public void setMinutes(Integer minutes) {
         this.minutes = minutes;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }
