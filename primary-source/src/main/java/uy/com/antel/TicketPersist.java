@@ -5,8 +5,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class TicketPersist extends DbConnection {
 
@@ -15,6 +17,8 @@ public class TicketPersist extends DbConnection {
     public TicketPersist(Ticket ticket) {
         this.ticket = ticket;
     }
+
+    public TicketPersist(){}
 
     private String formatDateToDB(Date fecha){
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -46,6 +50,25 @@ public class TicketPersist extends DbConnection {
         }
         return true;
     }
+
+    public List<Ticket> loadTickets(){
+        List<Ticket> listaTickets = new ArrayList<Ticket>();
+        try {
+            String query = "SELECT * FROM tickets";
+            conn = ds.getConnection();
+            ps = conn.prepareStatement(query);
+            ps.execute();
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+            {
+                Ticket ticket  = new Ticket(rs.getInt("ticketId"),rs.getInt("agencyId"),rs.getString("carRegistration"),rs.getInt("minutes"),rs.getDate("saleDate"),rs.getDate("startDate"));
+                listaTickets.add(ticket);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaTickets;
+    }
 /*
     public void loadTicket(Ticket t){
         try {
@@ -68,4 +91,6 @@ public class TicketPersist extends DbConnection {
         }
     }
 */
+
+
 }

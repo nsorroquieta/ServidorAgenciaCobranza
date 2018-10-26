@@ -21,6 +21,19 @@ public class Ticket {
         this.setSaleDate();
     }
 
+    public Ticket(Integer ticketID, Integer agencyID, String carRegistration, Integer minutes, Date saleDate, Date startDate) {
+        this.setTicketID(ticketID);
+        this.setAgencyID(agencyID);
+        this.setCarRegistration(carRegistration);
+        this.setMinutes(minutes);
+        this.setSaleDate(saleDate);
+        this.setStartDate(startDate);
+    }
+
+    public void setSaleDate(Date saleDate){
+        this.saleDate = saleDate;
+    }
+
     public Integer getTicketID() {
         return ticketID;
     }
