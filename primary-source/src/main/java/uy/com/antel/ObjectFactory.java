@@ -24,16 +24,34 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _CancellationRequest_QNAME = new QName("http://antel.com.uy/", "cancellationRequest");
     private final static QName _ComprarTicket_QNAME = new QName("http://antel.com.uy/", "comprarTicket");
-    private final static QName _Test_QNAME = new QName("http://antel.com.uy/", "test");
+    private final static QName _CancellationRequestResponse_QNAME = new QName("http://antel.com.uy/", "cancellationRequestResponse");
     private final static QName _ComprarTicketResponse_QNAME = new QName("http://antel.com.uy/", "comprarTicketResponse");
-    private final static QName _TestResponse_QNAME = new QName("http://antel.com.uy/", "testResponse");
+    private final static QName _CalcularCosto_QNAME = new QName("http://antel.com.uy/", "calcularCosto");
+    private final static QName _CalcularCostoResponse_QNAME = new QName("http://antel.com.uy/", "calcularCostoResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: uy.com.antel
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link CancellationRequestResponse }
+     * 
+     */
+    public CancellationRequestResponse createCancellationRequestResponse() {
+        return new CancellationRequestResponse();
+    }
+
+    /**
+     * Create an instance of {@link CancellationRequest }
+     * 
+     */
+    public CancellationRequest createCancellationRequest() {
+        return new CancellationRequest();
     }
 
     /**
@@ -45,19 +63,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Test }
+     * Create an instance of {@link CalcularCosto }
      * 
      */
-    public Test createTest() {
-        return new Test();
-    }
-
-    /**
-     * Create an instance of {@link TestResponse }
-     * 
-     */
-    public TestResponse createTestResponse() {
-        return new TestResponse();
+    public CalcularCosto createCalcularCosto() {
+        return new CalcularCosto();
     }
 
     /**
@@ -66,6 +76,23 @@ public class ObjectFactory {
      */
     public ComprarTicketResponse createComprarTicketResponse() {
         return new ComprarTicketResponse();
+    }
+
+    /**
+     * Create an instance of {@link CalcularCostoResponse }
+     * 
+     */
+    public CalcularCostoResponse createCalcularCostoResponse() {
+        return new CalcularCostoResponse();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CancellationRequest }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://antel.com.uy/", name = "cancellationRequest")
+    public JAXBElement<CancellationRequest> createCancellationRequest(CancellationRequest value) {
+        return new JAXBElement<CancellationRequest>(_CancellationRequest_QNAME, CancellationRequest.class, null, value);
     }
 
     /**
@@ -78,12 +105,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Test }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CancellationRequestResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://antel.com.uy/", name = "test")
-    public JAXBElement<Test> createTest(Test value) {
-        return new JAXBElement<Test>(_Test_QNAME, Test.class, null, value);
+    @XmlElementDecl(namespace = "http://antel.com.uy/", name = "cancellationRequestResponse")
+    public JAXBElement<CancellationRequestResponse> createCancellationRequestResponse(CancellationRequestResponse value) {
+        return new JAXBElement<CancellationRequestResponse>(_CancellationRequestResponse_QNAME, CancellationRequestResponse.class, null, value);
     }
 
     /**
@@ -96,12 +123,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link TestResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CalcularCosto }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://antel.com.uy/", name = "testResponse")
-    public JAXBElement<TestResponse> createTestResponse(TestResponse value) {
-        return new JAXBElement<TestResponse>(_TestResponse_QNAME, TestResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://antel.com.uy/", name = "calcularCosto")
+    public JAXBElement<CalcularCosto> createCalcularCosto(CalcularCosto value) {
+        return new JAXBElement<CalcularCosto>(_CalcularCosto_QNAME, CalcularCosto.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CalcularCostoResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://antel.com.uy/", name = "calcularCostoResponse")
+    public JAXBElement<CalcularCostoResponse> createCalcularCostoResponse(CalcularCostoResponse value) {
+        return new JAXBElement<CalcularCostoResponse>(_CalcularCostoResponse_QNAME, CalcularCostoResponse.class, null, value);
     }
 
 }

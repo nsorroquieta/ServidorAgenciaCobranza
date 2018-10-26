@@ -25,19 +25,36 @@ public interface WebServiceIMM {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns int
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "cancellationRequest", targetNamespace = "http://antel.com.uy/", className = "uy.com.antel.CancellationRequest")
+    @ResponseWrapper(localName = "cancellationRequestResponse", targetNamespace = "http://antel.com.uy/", className = "uy.com.antel.CancellationRequestResponse")
+    public int cancellationRequest(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        int arg1);
+
+    /**
+     * 
      * @param arg3
      * @param arg2
      * @param arg4
      * @param arg1
      * @param arg0
      * @return
-     *     returns java.lang.String
+     *     returns int
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "comprarTicket", targetNamespace = "http://antel.com.uy/", className = "uy.com.antel.ComprarTicket")
     @ResponseWrapper(localName = "comprarTicketResponse", targetNamespace = "http://antel.com.uy/", className = "uy.com.antel.ComprarTicketResponse")
-    public String comprarTicket(
+    public int comprarTicket(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0,
         @WebParam(name = "arg1", targetNamespace = "")
@@ -53,14 +70,14 @@ public interface WebServiceIMM {
      * 
      * @param arg0
      * @return
-     *     returns java.lang.String
+     *     returns float
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "test", targetNamespace = "http://antel.com.uy/", className = "uy.com.antel.Test")
-    @ResponseWrapper(localName = "testResponse", targetNamespace = "http://antel.com.uy/", className = "uy.com.antel.TestResponse")
-    public String test(
+    @RequestWrapper(localName = "calcularCosto", targetNamespace = "http://antel.com.uy/", className = "uy.com.antel.CalcularCosto")
+    @ResponseWrapper(localName = "calcularCostoResponse", targetNamespace = "http://antel.com.uy/", className = "uy.com.antel.CalcularCostoResponse")
+    public float calcularCosto(
         @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
+        int arg0);
 
 }

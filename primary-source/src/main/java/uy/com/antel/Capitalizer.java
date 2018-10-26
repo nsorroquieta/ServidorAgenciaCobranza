@@ -90,6 +90,7 @@ public class Capitalizer extends Thread {
      */
     private String crearTicket(String jsonData){
         voInputData inputData = new Gson().fromJson(jsonData,voInputData.class);
+        QueriesAgency queries = new QueriesAgency();
 
         try {
 
@@ -103,8 +104,10 @@ public class Capitalizer extends Thread {
                 String startDateAsString = sdf.format(ticket.getStartDate());
 
                 WebServiceIMMService ws = new WebServiceIMMService();
-                String buyTicketResponse = ws.getWebServiceIMMPort().comprarTicket(ticket.getAgencyID(), ticket.getCarRegistration(), startDateAsString, inputData.getStartDate(), ticket.getMinutes());
-                ticket.setTicketID(Integer.parseInt(buyTicketResponse));
+                int buyTicketResponse = ws.getWebServiceIMMPort().comprarTicket(ticket.getAgencyID(), ticket.getCarRegistration(), startDateAsString, inputData.getStartDate(), ticket.getMinutes());
+                //String buyTicketResponse = ws.getWebServiceIMMPort().comprarTicket(ticket.getAgencyID(), ticket.getCarRegistration(), startDateAsString, inputData.getStartDate(), ticket.getMinutes());
+                //ticket.setTicketID(Integer.parseInt(buyTicketResponse));
+                ticket.setTicketID(buyTicketResponse);
                 TicketPersist ts = new TicketPersist(ticket);
                 boolean result = ts.guardarDatos();
                 if(result)
@@ -114,16 +117,22 @@ public class Capitalizer extends Thread {
                     return "Ocurrio un error al intentar guardar el ticket en la base de datos de la Agencia";
                 }
             }
-
             if(inputData.getCommand().equals("cancelTicket"))
             {
-                return "Se va a cancelar el ticket: " + inputData.getTicketId();
+                int idTicket = Integer.parseInt(inputData.getTicketId());
+                System.out.println("Anula Idtiket"+idTicket);
+                WebServiceIMMService ws = new WebServiceIMMService();
+                int cancellResponse = ws.getWebServiceIMMPort().cancellationRequest(5,idTicket);
+                boolean result = queries.anulaTicket(idTicket);
+                if(result)
+                {
+                    return "Se elimino el Ticket "+ inputData.getTicketId()+" ";
+                } else {
+                    return "Ocurrio un error al intentar anular el ticket en la base de datos de la Agencia";
+                }
             }
 
-        }catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        }catch (ParseException e) { e.printStackTrace(); }
         return "nada";
 
         /*
@@ -141,3 +150,4 @@ public class Capitalizer extends Thread {
         */
     }
 }
+
